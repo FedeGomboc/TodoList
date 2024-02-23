@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form">
+        <form>
+          <label>Titulo</label>
+          <input id="titulo" type="text" placeholder="Titulo" />
+
+          <label>Descripcion</label>
+          <input id="descripcion" type="text" placeholder="Descripcion" />
+
+          <label>Fecha</label>
+          <input id="fecha" type="date" />
+
+          <label>Prioridad</label>
+          <select id="prioridad">
+            <option value="Baja">Baja</option>
+            <option value="Media">Media</option>
+            <option value="Alta">Alta</option>
+          </select>
+        </form>
+        <div class="btnModal">
+          <button type="button" class="submitBtn">Agregar tarea</button>
+        </div>
+      </div>
+
+      <div class="toDoList"></div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
