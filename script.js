@@ -8,6 +8,10 @@ const prioridad = document.querySelector("#prioridad");
 const boton = document.querySelector(".submitBtn");
 const deleteBoton = document.querySelector(".deleteBtn");
 
+const modal = document.querySelector(".modal");
+const span = document.querySelector(".close");
+const btnModal = document.querySelector(".abrirModal");
+
 let tareas = [];
 
 crearToDo = () => {
@@ -22,9 +26,12 @@ crearToDo = () => {
     const prioridad = document.createElement("p");
     const boton = document.createElement("button");
     const botonDetalles = document.createElement("button");
-    const botonRealizar = document.createElement("button")
+    const botonRealizar = document.createElement("button");
+    const botonEditar = document.createElement("img")
 
-    botonRealizar.textContent = "Tarea realizada"
+    botonEditar.src = "https://pret3nti0u5.github.io/To-Do-List/imgs/pen.f143f2542420df9040ba2f60576c01b4.svg"
+    botonEditar.classList = "editBtn"
+    botonRealizar.textContent = "Tarea realizada";
     h1Titulo.textContent = element.titulo;
     descripcion.textContent = "Descripcion: " + element.descripcion;
     fecha.textContent = "Fecha: " + element.fecha;
@@ -37,9 +44,12 @@ crearToDo = () => {
     divIndividual.classList = "divIndividual";
     divIndividual.appendChild(h1Titulo);
 
-    divIndividual.appendChild(botonRealizar)
+    divIndividual.appendChild(botonRealizar);
+    divIndividual.appendChild(botonEditar)
 
-    botonRealizar.onclick = function () { realizarTarea(element.id, divIndividual, botonRealizar) }
+    botonRealizar.onclick = function () {
+      realizarTarea(element.id, divIndividual, botonRealizar);
+    };
 
     botonDetalles.onclick = function () {
       verDetalles(
@@ -52,7 +62,7 @@ crearToDo = () => {
         botonRealizar
       );
     };
-    
+
     divIndividual.appendChild(botonDetalles);
 
     boton.onclick = function () {
@@ -112,7 +122,10 @@ verDetalles = (
       div.insertBefore(prioridad, botonRealizar);
 
       botonDetalles.textContent = "Dejar de ver detalles";
-    } else if (tarea.id === id && botonDetalles.textContent === "Dejar de ver detalles") {
+    } else if (
+      tarea.id === id &&
+      botonDetalles.textContent === "Dejar de ver detalles"
+    ) {
       div.removeChild(descripcion);
       div.removeChild(fecha);
       div.removeChild(prioridad);
@@ -128,17 +141,26 @@ realizarTarea = (id, div, boton) => {
   let i = 0;
   for (const tarea of tareas) {
     if (tarea.id === id && boton.textContent === "Tarea realizada") {
-      div.style.background = "#4caf50"
-      boton.textContent = "Tarea no realizada"
+      div.style.background = "#4caf50";
+      boton.textContent = "Tarea no realizada";
     } else if (tarea.id === id && boton.textContent === "Tarea no realizada") {
-      div.style.background = "#999999"
-      boton.textContent = "Tarea realizada"
+      div.style.background = "#999999";
+      boton.textContent = "Tarea realizada";
     } else {
-      i++
+      i++;
     }
   }
-}
+};
 
 boton.addEventListener("click", () => {
   agregarTarea();
+  modal.style.display = "none";
+});
+
+btnModal.addEventListener("click", () => {
+  modal.style.display = "block";
+});
+
+span.addEventListener("click", () => {
+  modal.style.display = "none";
 });

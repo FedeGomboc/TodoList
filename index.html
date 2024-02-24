@@ -9,25 +9,33 @@
   <body>
     <div class="container">
       <div class="form">
-        <form>
-          <label>Titulo</label>
-          <input id="titulo" type="text" placeholder="Titulo" />
-
-          <label>Descripcion</label>
-          <input id="descripcion" type="text" placeholder="Descripcion" />
-
-          <label>Fecha</label>
-          <input id="fecha" type="date" />
-
-          <label>Prioridad</label>
-          <select id="prioridad">
-            <option value="Baja">Baja</option>
-            <option value="Media">Media</option>
-            <option value="Alta">Alta</option>
-          </select>
-        </form>
         <div class="btnModal">
-          <button type="button" class="submitBtn">Agregar tarea</button>
+          <button type="button" class="abrirModal">Agregar tarea</button>
+        </div>
+
+        <div class="modal">
+          <div class="modalContent">
+            <span class="close">&times;</span>
+            <form>
+              <label>Titulo</label>
+              <input id="titulo" type="text" placeholder="Titulo" />
+
+              <label>Descripcion</label>
+              <input id="descripcion" type="text" placeholder="Descripcion" />
+
+              <label>Fecha</label>
+              <input id="fecha" type="date" />
+
+              <label>Prioridad</label>
+              <select id="prioridad">
+                <option value="Baja">Baja</option>
+                <option value="Media">Media</option>
+                <option value="Alta">Alta</option>
+              </select>
+
+              <button type="button" class="submitBtn">Agregar tarea</button>
+            </form>
+          </div>
         </div>
       </div>
 
