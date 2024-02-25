@@ -7,6 +7,8 @@ const fecha = document.querySelector("#fecha");
 const prioridad = document.querySelector("#prioridad");
 const boton = document.querySelector(".submitBtn");
 const deleteBoton = document.querySelector(".deleteBtn");
+const form = document.querySelector("form");
+const toDoListDiv = document.querySelector(".toDoList");
 
 const modal = document.querySelector(".modal");
 const span = document.querySelector(".close");
@@ -14,62 +16,45 @@ const btnModal = document.querySelector(".abrirModal");
 
 let tareas = [];
 
-crearToDo = () => {
-  const toDoListDiv = document.querySelector(".toDoList");
+renderToDo = () => {
   toDoListDiv.textContent = "";
 
   tareas.forEach((element) => {
     const divIndividual = document.createElement("div");
-    const h1Titulo = document.createElement("h1");
-    const descripcion = document.createElement("p");
-    const fecha = document.createElement("p");
-    const prioridad = document.createElement("p");
-    const boton = document.createElement("button");
-    const botonDetalles = document.createElement("button");
-    const botonRealizar = document.createElement("button");
-    const botonEditar = document.createElement("img")
+    divIndividual.classList = "divIndividual";
 
-    botonEditar.src = "https://pret3nti0u5.github.io/To-Do-List/imgs/pen.f143f2542420df9040ba2f60576c01b4.svg"
-    botonEditar.classList = "editBtn"
-    botonRealizar.textContent = "Tarea realizada";
+    const h1Titulo = document.createElement("h1");
     h1Titulo.textContent = element.titulo;
+    const descripcion = document.createElement("p");
     descripcion.textContent = "Descripcion: " + element.descripcion;
+    const fecha = document.createElement("p");
     fecha.textContent = "Fecha: " + element.fecha;
+    const prioridad = document.createElement("p");
     prioridad.textContent = "Prioridad: " + element.prioridad;
 
-    boton.textContent = "Eliminar tarea";
+    const botonEliminar = document.createElement("button");
+    botonEliminar.textContent = "Eliminar tarea";
+    botonEliminar.classList = "deleteBtn";
+    const botonDetalles = document.createElement("button");
     botonDetalles.textContent = "Ver detalles";
     botonDetalles.classList = "detallesBtn";
-    boton.classList = "deleteBtn";
-    divIndividual.classList = "divIndividual";
+    const botonRealizar = document.createElement("button");
+    botonRealizar.textContent = "Tarea realizada";
+    botonRealizar.classList = "realizarBtn"
+    const botonEditar = document.createElement("button");
+    botonEditar.textContent = "Editar tarea";
+    botonEditar.classList = "editBtn";
+
     divIndividual.appendChild(h1Titulo);
-
     divIndividual.appendChild(botonRealizar);
-    divIndividual.appendChild(botonEditar)
-
-    botonRealizar.onclick = function () {
-      realizarTarea(element.id, divIndividual, botonRealizar);
-    };
-
-    botonDetalles.onclick = function () {
-      verDetalles(
-        element.id,
-        divIndividual,
-        descripcion,
-        fecha,
-        prioridad,
-        botonDetalles,
-        botonRealizar
-      );
-    };
-
     divIndividual.appendChild(botonDetalles);
+    divIndividual.appendChild(botonEliminar);
+    divIndividual.appendChild(botonEditar);
 
-    boton.onclick = function () {
-      eliminarTarea(element.id);
-    };
-
-    divIndividual.appendChild(boton);
+    botonRealizar.onclick = function () { realizarTarea(element.id, divIndividual, botonRealizar) };
+    botonDetalles.onclick = function () { verDetalles(element.id, divIndividual, descripcion, fecha, prioridad, botonDetalles, botonRealizar); };
+    botonEliminar.onclick = function () { eliminarTarea(element.id); };
+    botonEditar.onclick = function () { editarTarea(element.id); };
 
     toDoListDiv.appendChild(divIndividual);
   });
@@ -90,7 +75,7 @@ agregarTarea = () => {
   descripcion.value = "";
   fecha.value = "";
 
-  crearToDo();
+  renderToDo();
 };
 
 eliminarTarea = (id) => {
@@ -102,7 +87,7 @@ eliminarTarea = (id) => {
       i++;
     }
   }
-  crearToDo();
+  renderToDo();
 };
 
 verDetalles = (
@@ -138,7 +123,6 @@ verDetalles = (
 };
 
 realizarTarea = (id, div, boton) => {
-  let i = 0;
   for (const tarea of tareas) {
     if (tarea.id === id && boton.textContent === "Tarea realizada") {
       div.style.background = "#4caf50";
@@ -146,6 +130,48 @@ realizarTarea = (id, div, boton) => {
     } else if (tarea.id === id && boton.textContent === "Tarea no realizada") {
       div.style.background = "#999999";
       boton.textContent = "Tarea realizada";
+    }
+  }
+};
+
+editarTarea = (id) => {
+  const btnModificar = document.createElement("button");
+  btnModificar.type = "button";
+  btnModificar.textContent = "Modificar tarea";
+  btnModificar.classList = "modificarBtn"
+
+  modal.style.display = "block";
+
+  form.replaceChild(btnModificar, boton);
+
+  let i = 0;
+  let j = 0;
+
+  for (const tarea of tareas) {
+    if (tarea.id === id) {
+      titulo.value = tareas[i].titulo;
+      descripcion.value = tareas[i].descripcion;
+      fecha.value = tareas[i].fecha;
+      prioridad.value = tareas[i].prioridad;
+
+      j = i;
+
+      btnModificar.addEventListener("click", () => {
+        console.log(j)
+        tareas[j].titulo = titulo.value;
+        tareas[j].descripcion = descripcion.value;
+        tareas[j].fecha = fecha.value;
+        tareas[j].prioridad = prioridad.value;
+        modal.style.display = "none";
+
+        renderToDo();
+
+        form.replaceChild(boton, btnModificar);
+        titulo.value = "";
+        descripcion.value = "";
+        fecha.value = "";
+        prioridad.value = "";
+      });
     } else {
       i++;
     }
@@ -159,8 +185,4 @@ boton.addEventListener("click", () => {
 
 btnModal.addEventListener("click", () => {
   modal.style.display = "block";
-});
-
-span.addEventListener("click", () => {
-  modal.style.display = "none";
 });
