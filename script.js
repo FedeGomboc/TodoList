@@ -1,6 +1,3 @@
-//PENDIENTE:
-//-Editar tarea
-
 const titulo = document.querySelector("#titulo");
 const descripcion = document.querySelector("#descripcion");
 const fecha = document.querySelector("#fecha");
@@ -18,6 +15,8 @@ let tareas = [];
 
 renderToDo = () => {
   toDoListDiv.textContent = "";
+
+  localStorage.setItem("tareas", JSON.stringify(tareas))
 
   tareas.forEach((element) => {
     const divIndividual = document.createElement("div");
@@ -127,9 +126,11 @@ realizarTarea = (id, div, boton) => {
     if (tarea.id === id && boton.textContent === "Tarea realizada") {
       div.style.background = "#4caf50";
       boton.textContent = "Tarea no realizada";
+      boton.classList = "tareaNoRealizada"
     } else if (tarea.id === id && boton.textContent === "Tarea no realizada") {
       div.style.background = "#999999";
       boton.textContent = "Tarea realizada";
+      boton.classList = "realizarBtn"
     }
   }
 };

@@ -51,7 +51,8 @@ select {
 }
 
 .submitBtn,
-.abrirModal {
+.abrirModal,
+.modificarBtn  {
   background-color: #4caf50;
   color: #fff;
   padding: 10px;
@@ -86,7 +87,8 @@ select {
   color: #000;
 }
 
-.deleteBtn {
+.deleteBtn,
+.tareaNoRealizada {
   background-color: #d9534f;
   color: #fff;
   padding: 8px;
@@ -98,7 +100,8 @@ select {
   margin-right: 10px;
 }
 
-.deleteBtn:hover {
+.deleteBtn:hover,
+.tareaNoRealizada:hover {
   background-color: #c9302c;
 }
 
